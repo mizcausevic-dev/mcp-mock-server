@@ -1,0 +1,23 @@
+{
+  "tools": [
+    {
+      "name": "lookup_invoice",
+      "description": "Read an invoice by id.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "invoice_id": { "type": "string", "minLength": 1 } },
+        "required": ["invoice_id"]
+      }
+    },
+    {
+      "name": "ping",
+      "description": "Health check."
+    }
+  ],
+  "stubs": {
+    "lookup_invoice": { "response": { "id": "INV-1", "amount": 4200 } },
+    "ping": { "response": "pong", "latencyMs": 0 }
+  },
+  "validation": "lenient",
+  "serverInfo": { "name": "mock-billing", "version": "0.1.0" }
+}
