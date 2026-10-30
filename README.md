@@ -10,22 +10,27 @@ Building an MCP client and need to test how it behaves when a tool call times ou
 
 The mock reads newline-delimited JSON-RPC on stdin and writes responses on stdout. Any MCP client speaking the stdio transport will see it as a real server.
 
-## Install
+## Use from source
+
+This repository has no Miz Causevic npm release. The unscoped `mcp-mock-server` name on npm belongs to a different project; do not use `npm install -g mcp-mock-server` or `npx mcp-mock-server` to run this implementation.
 
 ```bash
-npm install -g mcp-mock-server   # CLI
-npm install mcp-mock-server      # library
+git clone https://github.com/mizcausevic-dev/mcp-mock-server.git
+cd mcp-mock-server
+npm ci
+npm run build
+node dist/cli.js fixtures/config.json --validation strict
 ```
 
-Requires Node ≥ 20.
+Requires Node ≥ 20. To use the library from another project, build this checkout first and install its local path (for example, `npm install --save /absolute/path/to/mcp-mock-server`). Pin the intended checkout in your own dependency workflow.
 
 ## CLI
 
 ```bash
-mcp-mock-server config.json --validation strict
+node dist/cli.js config.json --validation strict
 ```
 
-Point your MCP client at it as a stdio server (e.g. `npx mcp-mock-server fixtures/config.json`). The mock advertises the tools you supplied via `initialize` + `tools/list`, then routes `tools/call` to the stub you configured (or a default echo).
+Point your MCP client at this checkout as a stdio server (for example, run `node /absolute/path/to/mcp-mock-server/dist/cli.js /absolute/path/to/mcp-mock-server/fixtures/config.json`). The mock advertises the tools you supplied via `initialize` + `tools/list`, then routes `tools/call` to the stub you configured (or a default echo).
 
 ## Config
 
